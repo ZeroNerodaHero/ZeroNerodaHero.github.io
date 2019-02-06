@@ -41,3 +41,11 @@ footer{
   text-decoration: none;
   font-size: 17px;
 }
+
+div + ul {
+    margin-top: -10px;
+}
+
+div + ol {
+    margin-top: -10px;
+}
