@@ -21,6 +21,8 @@ footer{
   color: #FFFFFF;
 }
 
+.bluehigh{ background-color:#ccffff }
+
 .navbar{
   position: fixed;
   font-size: 150%; 
