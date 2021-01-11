@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fruity Cups </title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="res/icon.ico">
+        <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+        <script src="game.js"></script>
+
+    </head>
+
+
+    <body>
+        <p id="stat">
+            μ = <span id="EV"></span> 
+            σ = <span id="distr"></span> 
+            <br>
+            win/loss = <span id="WLoss"></span>
+            <br>
+            expected win/loss = <span id="EWLoss"></span>
+        </p>
+        <div id="gamescreen"> 
+            <p id="title">Schizo </p>
+            <canvas id="myChart" width="500" height="300"></canvas>
+            <script>init();</script>
+
+            <span id="wager_sel">
+                <button type="button" onclick="mani_wager(-1)">-</button>
+                <span id="wager_print"> Wager: 1</span>
+                <button type="button" onclick="mani_wager(1)">+</button>
+            </span>
+
+            &emsp;
+            
+            <span id="risk_sel">
+                <button type="button" onclick="mani_risk(-0.25)">-</button>
+                <span id="risk_print"> Risk: 1 </span> 
+                <button type="button" onclick="mani_risk(0.25)">+</button>
+            </span>
+    
+            <br>
+            <p align="center">
+                <button type="button" onclick="new_play()">ROLL</button>
+            </p>
+
+            <p id="total">
+                Total Fruit Cups: 100
+            </p>
+
+        </div>
+            
+    </body>
+</html> 
+
