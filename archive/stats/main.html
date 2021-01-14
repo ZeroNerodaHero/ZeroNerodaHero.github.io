@@ -16,10 +16,83 @@
             μ = <span id="EV"></span> 
             σ = <span id="distr"></span> 
             <br>
-            win/loss = <span id="WLoss"></span>
+            win rate = <span id="WLoss"></span>
             <br>
-            expected win/loss = <span id="EWLoss"></span>
+            expected win rate = <span id="EWLoss"></span>
         </p>
+        <div id="Desc">
+            A girl is caught in the Bosian Civil War. She is stuck and has to survive on 
+            Fruit Cups air dropped by the Americans. In America, fruit cups might be worth
+            a few dimes; however this is Bosnia. A fruit cup is worth $10 on the black market.
+            Luckly, the girl gets a supply drop of 100 cups right in front of babushka's house.
+            
+            <br><br>
+
+            Rules:
+            The girl falls victim to the local gambler. She can choose to how much to gamble
+            (wager) and the risk. If the graph's y value is higher than the risk, she wins and 
+            gains an amount equal to risk rate. For example, if she wagers 1 cup and has a 
+            risk of 1, she earns 1 cup. <br>
+            No matter what, if she loses, she loses the wager. <br>
+
+            Calculation: <br>
+
+            <table style="margin-left: auto; margin-right: auto;"> 
+                <tr>
+                    <th> Win </th>
+                    <th> Loss </th>
+                </tr>
+                <tr>
+                    <td class = "WinCnt"> </td>
+                    <td class = "LossCnt"> </td>
+                </tr>
+            </table> <br>
+            (It's just a tree diagram: win/loss). <br> <br>
+
+            Expected Value(<span class = "EValue"></span>) = 
+            <span class="LossCnt"></span>/360 x (-<span class="wagercnt"></span>) 
+            + 
+            <span class="WinCnt"></span>/360 x <span class="wagercnt2"></span>
+
+            <br>
+            Distribution(<span class = "distrb"></span>) = 
+            sqrt[(-<span class="wagercnt"></span> - <span class="EValue"></span>)^2 x
+            <span class="LossCnt"></span>/360
+            +
+            (<span class="wagercnt2"></span> - <span class="EValue"></span>)^2 x
+            <span class="WinCnt"></span>/360)]
+
+            <br>
+            Because there is only 0-1, it is easier to write it like that. However, the code is running 
+            more according to the sigma notation. <br>
+
+            <pre style = "text-align: left; padding-left: 25%;">
+            Calculate Expected Value: 
+            function calculateEV(){
+                var EV = 0;
+                for(var i = 0; i < 360; i++){         // goes through all 360 outcomes
+                    if(con_y[i] < risk) EV -= wager;  // win case 
+                    else EV += wager;                 // lose case
+                }
+                return EV/360;                        // all the outcomes are of equal probability
+            }
+
+            Calculate Expected Variance: 
+            function calculateVar(EV){
+                var dist = 0;
+                for(var i = 0; i < 360; i++){
+                    var tmp = wager * -1;               // sets it to lose case as default 
+                    if(con_y[i] >= risk) tmp *= -2;     // sets it to a win case if it is a win
+                    var sqerror = (tmp-EV) * (tmp-EV);  // square error
+                    dist += sqerror * 1/360;            // multiplies by P(x)
+                }
+            return Math.sqrt(dist);
+            }
+
+            </pre>
+
+
+        </div>
         <div id="gamescreen"> 
             <p id="title">Schizo </p>
             <canvas id="myChart" width="500" height="300"></canvas>

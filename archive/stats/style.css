@@ -2,6 +2,12 @@
     background-image: url("res/bkg.png");
 }
 
+#Desc {
+    text-align: center;
+    background-color: red;
+    border: 1px solid black;
+}
+
 #gamescreen {
     border: 1px solid black;
     border-radius: 20px;

@@ -3,15 +3,16 @@ var myChart;
 var con_y = [];
 var con_x = [];
 var wager,total,risk,wins,plays,expected;
+var wincnt;
 
 function getRandomInt(max) { return Math.floor(Math.random() * Math.floor(max)); }
 
 function calculateEx(){
-    var wins = 0;
+    wincnt = 0;
     for(var i = 0; i < 360; i++){
-        if(con_y[i] >= risk) wins++
+        if(con_y[i] >= risk) wincnt++
     }
-    return wins/360;
+    return wincnt/360;
 }
 
 function calculateEV(){
@@ -26,7 +27,9 @@ function calculateEV(){
 function calculateVar(EV){
     var dist = 0;
     for(var i = 0; i < 360; i++){
-        var sqerror = (wager-EV) * (wager-EV);
+        var tmp = wager * -1; 
+        if(con_y[i] >= risk) tmp *= -2;
+        var sqerror = (tmp-EV) * (tmp-EV);
         dist += sqerror * 1/360;
     }
     console.log(dist);
@@ -48,6 +51,13 @@ function updateHtml(){
     if(isNaN(wl)) wl = "-";
     $("#WLoss").html(wl);
     $("#EWLoss").html(calculateEx());
+
+    $(".WinCnt").html(wincnt);
+    $(".LossCnt").html(360-wincnt);
+    $(".wagercnt").html(wager);
+    $(".wagercnt2").html(2*wager);
+    $(".EValue").html(EV.toFixed(3));
+    $(".distrb").html(dist.toFixed(3));
 }
 function init(){
     wager = 1; risk = 1; total = 100; wins = 0; plays = 0;
