@@ -38,3 +38,11 @@
 #stat{
     font-size: 9px;
 }
+
+.hide {
+  display: none;
+}
+    
+.myDIV:hover + .hide {
+  display: block;
+}
