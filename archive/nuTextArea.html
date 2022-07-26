@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        /*UNIMPORTANT STYLES*/
+        #doNOTcopy{
+            text-align:center;
+            margin-top: 5%;
+        }
+        #titEXAMPLE{
+            font-size: 1.5rem; 
+        }
+    </style>
+    <style>
+        :root{
+            --textBkgColor: #ffe1fc;
+            --textHoverBkgColor: #ea82df;
+
+            --buttonBkgColor: #ffe1fc;
+            --buttonHoverBkgColor: #ea82df;
+            --buttonPadding: 1px 3px 1px 3px;
+        }
+
+        /* TEXT EDITOR STYLE*/
+        #newTextEditor{
+            display: grid;
+            grid-template-columns: auto;
+        }
+        #textButtonButtonCont{
+            display: flex;
+            justify-content: center;
+        }
+        #textButtonCont{
+            width: 50%;
+            padding-top: 5px;
+            margin-top: 3px;
+        }
+        .textButton{
+            border: 1px black dotted;
+            border-width: 1px 1px 0px 1px;
+            background-color: var(--buttonBkgColor);
+            padding: var(--buttonPadding);
+        }
+        .textButton:hover{
+            background-color: var(--buttonHoverBkgColor);
+            padding-top: 5px;
+        }
+
+        /* SUBMIT STYLE*/
+        #newTextAreaCont{
+            display: flex;
+            justify-content: center;
+        }
+        #newTextArea{
+            border: 1px black solid;
+            width: 50%;    
+            height: 200px;
+            overflow: auto;
+            word-break: break-all;
+            padding: 3px;
+
+            background-color: var(--textBkgColor);
+
+        }
+        #newTextArea img{
+            width: 50%;
+            display: block;
+        }
+        #newTextArea:hover{
+            background-color: var(--textHoverBkgColor);
+        }
+        #newTextArea:focus{
+            background-color: var(--textHoverBkgColor);
+        }
+        .insertLinkArea{
+            font-style: italic;
+        }
+
+        /* SUBMIT STYLE*/
+        #submitCont{
+            display: flex;
+            justify-content: center;
+        }
+        #submitButtonCont{
+            width: 50%;
+            display: flex;
+            justify-content: flex-end;
+        }
+        #submitButton{
+            width: fit-content;
+            border: 1px black dotted;
+            border-width: 0px 1px 1px 1px;
+            background-color: var(--buttonBkgColor);
+            padding: var(--buttonPadding);
+        }
+        #submitButton:hover{
+            background-color: var(--buttonHoverBkgColor);
+            padding-bottom:5px;
+        }
+    </style>
+    <body>
+        <div id=doNOTcopy>
+        <div id=titEXAMPLE>nuTEXTAREA EXAMPLE</div>
+        <img src=https://pbs.twimg.com/media/FX2Sh6LUIAE4gkt?format=jpg&name=large 
+            style="width:50%">
+        </div>
+        
+        <div id=newTextEditor>
+            <div id=textButtonButtonCont>
+                <div id=textButtonCont>
+                    <span class=textButton onclick=addIMG()>
+                        ADD IMG
+                    </span>
+                    <span class=textButton onclick=addLNK()>
+                        ADD LNK
+                    </span>
+                    <span class=textButton onclick=addYTB()>
+                        ADD YTB
+                    </span>
+                    <span class=textButton onclick=addVIDEO()>
+                        ADD VIDEO
+                    </span>
+                </div>
+            </div>
+            <div id=newTextAreaCont>
+                <div contenteditable="true" id=newTextArea>1 2 3 4 5 6 7 8 9 10</div>
+            </div>
+            <div id=submitCont>
+                <div id=submitButtonCont>
+                    <div id=submitButton onclick=submitValue()>Submit </button>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        var newTextAreaEle = document.getElementById("newTextArea");
+
+        newTextAreaEle.addEventListener('keyup',function(event){
+            replaceView();
+        });
+        newTextAreaEle.addEventListener('click',function(event){
+        });
+    
+        function addIMG(){
+            appendText("[IMG]");
+        }
+        function addLNK(){
+            appendText("[LNK]",0);
+        }
+        function addYTB(){
+            appendText("[YTB]");
+        }
+        function addVIDEO(){
+            appendText("[VIDEO]");
+        }
+        function submitValue(){
+            var textVal=extractString(newTextAreaEle);
+            console.log(textVal);
+            console.log(standardizeText(textVal));
+        }
+        function extractString(node){
+            if(!node) return "";
+            if(node.nodeType == 3){
+                return node.textContent;
+            }
+            if(node.nodeType == 1){
+                if(node.nodeName == "IMG"){
+                    return "\n[IMG]("+node.src+")\n";
+                }
+                if(node.nodeName == "A"){
+                    if(node.className == "videoLink") return "";
+                    return "[LNK]("+node.href+")";
+                }
+                if(node.nodeName == "IFRAME"){
+                    return "\n[YTB]("+node.src+")\n";
+                }
+                if(node.nodeName == "VIDEO"){
+                    return "\n[VIDEO]("+node.currentSrc+")\n";
+                }
+            }
+
+            var retStr="";
+            var nodeChildren = node.childNodes;
+            for(var childNode of nodeChildren){
+                retStr += extractString(childNode);
+            }
+            if(node.nodeName == "DIV") retStr += "\n";
+            return retStr;
+        }
+        function standardizeText(inputStr){
+            var outputStr = ""+inputStr[0];
+            var outputOffset = 1;
+            for(var i = 1; i < inputStr.length; i++){
+                if((inputStr[i] == "\n" && outputStr[outputOffset-1] == "\n") ||
+                   (inputStr[i] == " " && outputStr[outputOffset-1] == "\n") ||
+                    (inputStr[i] == " " && outputStr[outputOffset-1] == " ")){
+                        continue;
+                }
+                outputStr+=inputStr[i];
+                outputOffset++;
+            }
+            return outputStr;
+        }
+
+        function appendText(text,lineBreak=1){
+            var srcLnk=document.createElement("span");
+            srcLnk.className = "insertLinkArea";
+            srcLnk.innerHTML = "*insert link*";
+            srcLnk.addEventListener("click",function(){
+                this.parentElement.removeChild(this);
+            });
+            
+            var eleType = (lineBreak ? "div" : "span");
+            var insertText=document.createElement(eleType);
+            insertText.append(" "+text+"(");
+            insertText.appendChild(srcLnk);
+            insertText.append(") ");
+
+            var newTextArea = document.getElementById("newTextArea");
+            newTextArea.appendChild(insertText);
+        }
+
+        function replaceView(){
+            var node = document.getElementById("newTextArea");
+            var oriText = newText = node.innerHTML;
+
+            for(var i = 0; i < oriText.length; i++){
+                //if opt-> 0 nothing
+                // 1 finding selection type
+                // done
+                var textLength = oriText.length;
+                var start = i,opt = 0;
+                var optType = "",optLink="";
+                while(i < textLength && opt != 3){
+                    if(opt ==0 && oriText[i] == "["){
+                        opt=1;
+                        start=i;
+                    }
+                    else if(opt == 1){
+                        if(oriText[i] == "]"){
+                            i++;
+                            if(i < textLength && oriText[i] == "("){
+                                opt=2;
+                            } else{
+                                opt=0;
+                                optType = optLink="";
+                            }
+                        }
+                        else optType += oriText[i];
+                    } else if(opt == 2){
+                        if(oriText[i] == ")"){
+                            opt = 3;
+                        } else{
+                            optLink += oriText[i];
+                        }
+                    }
+                    i++;
+                }
+                if(opt == 3){
+                    if(optLink != "" && optLink[0] != "<"){
+                        var toInsert = "";
+                        if(optType == "IMG"){
+                            toInsert = "<img src='"+optLink+"'><br>";
+                        }
+                        else if(optType == "LNK"){
+                            toInsert = "<a href='"+optLink+"'>"+optLink+"</a>";
+                        }
+                        else if(optType == "YTB"){
+                            var youtubeID="";
+                            var j = optLink.length-1;
+                            while(j >= 0 && optLink[j] != "/"){
+                                var tmpId= "";
+                                while(j >= 0 && optLink[j] != "/" && optLink !="&" && optLink[j] != "="){
+                                    tmpId= optLink[j]+tmpId;
+                                    j--;
+                                }
+                                if(optLink[j] == "/"){
+                                    youtubeID = tmpId;
+                                    break;
+                                } else if(optLink[j] == "="){
+                                    j--;
+                                    var GEType="";
+                                    while(j >= 0 && optLink[j] != "&" && optLink[j] != "?"){
+                                        GEType = optLink[j]+GEType;
+                                        j--;
+                                    }
+                                    if(GEType == "v"){
+                                        youtubeID = tmpId;
+                                        break;
+                                    } else{
+                                        j--;
+                                    }
+                                }
+                            }
+                            toInsert = "<div><iframe width='50%' src='"+
+                                "https://www.youtube.com/embed/"+youtubeID+"'"+
+                                "</iframe></div>";
+                        }
+                        else if(optType == "VIDEO"){
+                            var videoType="";
+                            var j = optLink.length-1;
+                            while(optLink[j] != "."){
+                                videoType = optLink[j]+videoType;
+                                j--;
+                            }
+                            if(videoType == "webm" || videoType=="mp4" || videoType=="ogg"){
+                                toInsert = "<video width='50%' controls>"+
+                                    "<source src='"+optLink+"' type='video/"+videoType+
+                                    "'>You Can't Play Video on this Browser</video><br>"+
+                                    "<div><a class=videoLink href='"+optLink+"'>"+
+                                    optLink+"</a></div>"+
+                                    "<br>";
+                            }
+                        }
+
+                        if(toInsert != ""){
+                            var keepLeft = oriText.substr(0,start);
+                            var keepRight = oriText.substr(i);
+                            node.innerHTML = keepLeft+toInsert+keepRight;
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</html>
