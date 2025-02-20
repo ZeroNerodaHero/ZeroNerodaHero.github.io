@@ -1,0 +1,14 @@
+.text_box{
+    background-color: var(--second-bg-color);
+    font-size: large;
+    text-align: center;
+    display: grid;
+
+    padding: 3px 12px;
+    margin-top: 7px;
+    
+    box-shadow: var(--second-text-color) 0px 2px 7px;;
+    
+    height: fit-content;
+    width: 90vw;
+}
