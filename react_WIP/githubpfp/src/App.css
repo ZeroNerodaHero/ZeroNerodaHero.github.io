@@ -12,11 +12,11 @@
   display: grid;
 }
 .header{
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: bold;
 }
 .title{
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   font-weight: bold;
 }
 .sub-text{
@@ -31,4 +31,6 @@
   background-repeat: repeat;
   height: 100vh;
   width: 100vw;
+
+  font-family: 'Jersey 15', serif;
 }

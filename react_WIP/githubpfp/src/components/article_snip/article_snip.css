@@ -4,6 +4,9 @@
 .articlesnip > div:nth-child(1),.articlesnip > div:nth-child(2){
     text-align: right;
 }
+.articlesnip > div:nth-child(2){
+    background-color: var(--second-text-color);
+}
 .articlesnip > div:nth-child(3){
     text-align: left;
 }

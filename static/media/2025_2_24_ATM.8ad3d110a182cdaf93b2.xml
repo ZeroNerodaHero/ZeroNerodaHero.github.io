@@ -1,0 +1,56 @@
+<page>
+    <title>On Alternating TMs #1</title>
+    <date>2-24-2025</date>
+    <text>
+        <![CDATA[
+            These are some notes on alternating turing machines. We define them like traditional turing machines
+            but some states can be mapped to have \(\exists,\forall\) modifiers such that for the \(\exists\) there
+            exists a computation that accepts and \(\forall\) modifiers, all computation branches must accept. For example,
+            a nondetermistic turing machine has the equivalent ATM with the \(\exists\) modifier at the head.
+
+            There are some interesting properties. Let us define the following
+            \[
+                \Sigma_1(P) = \{L : x\in L \Leftrightarrow \exists y: A(x,y) \text{ for some poly-compute A and for some fixed }i, |y| < |x|^i \}
+            \]
+            We can see the following defines what NP-Complete means. Take for example 3SAT, given a 3SAT boolean statement \(w\) 
+            and the verifier for 3SAT,
+            \[
+                w \in 3SAT \text{ iff } \exists y: \text{Verifier}(w,y) = True
+            \]
+            Similarly, lets define \(\Pi(P)\) as
+            \[
+            \Pi(P) = \{L : x \in L \Leftrightarrow \forall y: A(x,y)\}
+            \]
+            This is the definition for coNP. We can use the verifier for 3SAT and flip the 
+            output(ie \(\text{Verifier}'(x)=!\text{Verifier}(x)\)). For example if \(w\) is satifiable, then \(\text{Verifier}\) will be true
+            for some input, then \(\text{Verifier}'\) will not be true. And conversely, if \(w\) is not satifiable, 
+            then \(\text{Verifier}\) will be not be true
+            for any input, 
+            then \(\text{Verifier}'\) will be true.
+            Thus, \(coNP \in \Pi(P) \).
+
+            We can also notice an alternating property. If we have, 
+            \[
+                \forall y_1\forall y_2...\forall y_n = \forall y'\\
+            \]\[
+                \exists y_1\exists y_2...\exists y_n = \exists y'\\
+            \]
+            This holds true because we can collapse them together. Instead of finding the decompositions \(y_1,y_2,...,y_n\), we just
+            find the string that encodes the strings all together. Then lets define 
+            \[
+                \Sigma_n(P)=\exists y_1(\forall y_{2n}\exists y_{2n+1})^n 
+            \]
+            For example if \(n=2,
+                \Sigma_2 = \exists y_1\forall y_2
+            \)
+            And if \(n=4,
+                \Sigma_4=\exists y_1\forall y_2\exists y_3\forall y_4
+            \). 
+            For sanity check if it is odd, \(n=5,
+                \Sigma_4=\exists y_1\forall y_2\exists y_3\forall y_4\exists y_5
+            \). 
+            
+            The same idea also applies to \(\Pi_n\), but now it starts with a \(\forall\).
+        ]]>
+    </text>
+</page>
