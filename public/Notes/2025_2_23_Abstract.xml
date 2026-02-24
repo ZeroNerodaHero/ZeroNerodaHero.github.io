@@ -1,0 +1,22 @@
+<page>
+    <title>Abstract Algebra Exam Fail LOLE</title>
+    <date>2-23-2025</date>
+    <text>
+        <![CDATA[
+            I fucked up on my exam and got like 69%(this is real btw). I am rewriting the right answers. So question 1 was 
+            basically about on \(S_4\) what are all the even permuations. We can reduce the problem down to finding all
+            unique combination of two perms applied an even amount of times. We can only apply it zero, twice, or six times.
+            For sanity check, we know there exists a total of \(4!=24\) combinations, 
+            but only half or \(12\) combinations.
+            \[
+                Even(S_4) = \{1\}\cup\{(12)(13),(12)(14),(13)(12),(13)(14),(14)(12),(14)(13)\}\cup\{(12)(34),(13)(24),(14)(23)\}
+            \]
+            I wrote it in union because some of them 
+            \[
+            \langle \underline{x} | H | \underline{x}\rangle+...(\text{higher order terms})\ > 0
+            \]
+            This is true when H is positive definite by applying the same argument. If we cannot confirm either case(ie semi-definite), 
+            it would depend on the higher order terms. Pretty cool. 
+        ]]>
+    </text>
+</page>

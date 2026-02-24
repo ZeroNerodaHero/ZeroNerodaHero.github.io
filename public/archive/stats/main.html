@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fruity Cups </title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="res/icon.ico">
+        <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+        <script src="game.js"></script>
+
+    </head>
+
+
+    <body>
+        <p id="stat" class = "myDIV">
+            μ = <span id="EV"></span> 
+            σ = <span id="distr"></span> 
+            <br>
+            win rate = <span id="WLoss"></span>
+            <br>
+            expected win rate = <span id="EWLoss"></span>
+            <br>
+            (Hover to see more)
+        </p>
+        <div id="Desc" class = "hide">
+            A girl is caught in the Bosian Civil War. She is stuck and has to survive on 
+            Fruit Cups air dropped by the Americans. In America, fruit cups might be worth
+            a few dimes; however this is Bosnia. A fruit cup is worth $10 on the black market.
+            Luckly, the girl gets a supply drop of 100 cups right in front of babushka's house.
+            
+            <br><br>
+
+            Rules:
+            The girl falls victim to the local gambler. She can choose to how much to gamble
+            (wager) and the risk. If the graph's y value is higher than the risk, she wins and 
+            gains an amount equal to risk rate. For example, if she wagers 1 cup and has a 
+            risk of 1, she earns 1 cup. <br>
+            No matter what, if she loses, she loses the wager. <br>
+
+            Calculation: <br>
+
+            <table style="margin-left: auto; margin-right: auto;"> 
+                <tr>
+                    <th> Win </th>
+                    <th> Loss </th>
+                </tr>
+                <tr>
+                    <td class = "WinCnt"> </td>
+                    <td class = "LossCnt"> </td>
+                </tr>
+            </table> <br>
+            (It's just a tree diagram: win/loss). <br> <br>
+
+            Expected Value(<span class = "EValue"></span>) = 
+            <span class="LossCnt"></span>/360 x (-<span class="wagercnt"></span>) 
+            + 
+            <span class="WinCnt"></span>/360 x <span class="wagercnt2"></span>
+
+            <br>
+            Distribution(<span class = "distrb"></span>) = 
+            sqrt[(-<span class="wagercnt"></span> - <span class="EValue"></span>)^2 x
+            <span class="LossCnt"></span>/360
+            +
+            (<span class="wagercnt2"></span> - <span class="EValue"></span>)^2 x
+            <span class="WinCnt"></span>/360)]
+
+            <br>
+            Because there is only 0-1, it is easier to write it like that. However, the code is running 
+            more according to the sigma notation. <br>
+
+            <pre style = "text-align: left; padding-left: 25%;">
+            Calculate Expected Value: 
+            function calculateEV(){
+                var EV = 0;
+                for(var i = 0; i < 360; i++){         // goes through all 360 outcomes
+                    if(con_y[i] < risk) EV -= wager;  // win case 
+                    else EV += wager;                 // lose case
+                }
+                return EV/360;                        // all the outcomes are of equal probability
+            }
+
+            Calculate Expected Variance: 
+            function calculateVar(EV){
+                var dist = 0;
+                for(var i = 0; i < 360; i++){
+                    var tmp = wager * -1;               // sets it to lose case as default 
+                    if(con_y[i] >= risk) tmp *= -2;     // sets it to a win case if it is a win
+                    var sqerror = (tmp-EV) * (tmp-EV);  // square error
+                    dist += sqerror * 1/360;            // multiplies by P(x)
+                }
+            return Math.sqrt(dist);
+            }
+
+            </pre>
+
+
+        </div>
+        <div id="gamescreen"> 
+            <p id="title">Schizo </p>
+            <canvas id="myChart" width="500" height="300"></canvas>
+            <script>init();</script>
+
+            <span id="wager_sel">
+                <button type="button" onclick="mani_wager(-1)">-</button>
+                <span id="wager_print"> Wager: 1</span>
+                <button type="button" onclick="mani_wager(1)">+</button>
+            </span>
+
+            &emsp;
+            
+            <span id="risk_sel">
+                <button type="button" onclick="mani_risk(-0.25)">-</button>
+                <span id="risk_print"> Risk: 1 </span> 
+                <button type="button" onclick="mani_risk(0.25)">+</button>
+            </span>
+    
+            <br>
+            <p align="center">
+                <button type="button" onclick="new_play()">ROLL</button>
+            </p>
+
+            <p id="total">
+                Total Fruit Cups: 100
+            </p>
+
+        </div>
+            
+    </body>
+</html> 
+

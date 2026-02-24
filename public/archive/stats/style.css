@@ -1,0 +1,48 @@
+ body {
+    background-image: url("res/bkg.png");
+}
+
+#Desc {
+    text-align: center;
+    background-color: red;
+    border: 1px solid black;
+}
+
+#gamescreen {
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 5% 25% 5% 25%;
+    background-color: pink;
+}
+
+#title {
+    padding-top: 5px;
+    text-align: center;
+    font-size: 40px;
+    margin-top: 1%;
+}
+
+#wager_sel{
+    padding-left: 5px;
+}
+
+#risk_sel{
+    float: right;
+    padding-right: 5px;
+}
+
+#total{
+    text-align: center;
+}
+
+#stat{
+    font-size: 9px;
+}
+
+.hide {
+  display: none;
+}
+    
+.myDIV:hover + .hide {
+  display: block;
+}

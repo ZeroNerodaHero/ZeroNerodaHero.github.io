@@ -1,0 +1,38 @@
+A girl is caught in the Bosian Civil War. She is stuck and has to survive on 
+Fruit Cups air dropped by the Americans. In America, fruit cups might be worth
+a few dimes; however this is Bosnia. A fruit cup is worth $10 on the black market.
+Luckly, the girl gets a supply drop of 100 cups right in front of babushka's house.
+
+Rules:
+The girl falls victim to the local gambler. She can choose to how much to gamble
+(wager) and the risk. If the graph's y value is higher than the risk, she wins and 
+gains an amount equal to risk. For example, if she wagers 1 cup and has a risk of 1, she earns 1 cups.
+No matter what, if she loses, she loses the wager.
+
+Calculation(dynamic):
+
+<table>
+    <tr>
+        <th> Win </th>
+        <th> Loss </th>
+    </tr>
+    <tr>
+        <td class = "WinCnt"> </td>
+        <td class = "LossCnt"> </td>
+    </tr>
+</table>
+(It's just a tree diagram: win/loss).
+
+Expected Value(<span class = "EValue"></span>) = 
+<span class="LossCnt"></span>/360 x (-<span class="wagercnt"></span>) 
++ 
+<span class="WinCnt"></span>/360 x <span class="wagercnt2"></span>
+
+Distribution(<span class = "distrb"></span>) = 
+(-<span class="wagercnt"></span> - <span class="EValue></span>)^2 x
+<span class="LossCnt"></span>/360
++
+(<span class="wagercnt2"></span> - <span class="EValue></span>)^2 x
+<span class="WinCnt"></span>/360
+
+

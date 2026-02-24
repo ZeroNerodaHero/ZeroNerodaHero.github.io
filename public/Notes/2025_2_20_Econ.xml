@@ -1,0 +1,58 @@
+<page>
+    <title>Taylor Series and Simple Optimization</title>
+    <date>2-20-2025</date>
+    <text>
+        <![CDATA[
+            Given an \( f(x): R^n \rightarrow R \), we want to optimize it. 
+            We can realize the function as an expansion in the first dimension or when \( n = 1\):
+            \[
+            f(x) = f(a)+f^{(1)}(a)(x-a)+\frac{f^{(2)}(a)}{2!}(x-a)^2+...+\frac{f^{(n)}(a)}{n!}(x-a)^n+...\
+            \]
+            When we start using multivariables, we end up with gradients and hessians. We can realize that the following 
+            then
+            \[
+            f(\underline{x}) = f(\underline{a})+f^{(1)}(\underline{a})(\underline{x}-\underline{a})
+                +\frac{f^{(2)}(\underline{a})}{2!}(\underline{x}-\underline{a})^2+...(\text{higher order terms})\
+            \]
+            But more formally we know that the equivalent definitions in multivariables are
+            \[
+            f^{(1)}(\underline{a}) \approx \nabla f(a) = 
+            \begin{bmatrix}
+                \frac{\partial}{\partial x_1}\\
+                \frac{\partial}{\partial x_2}\\
+                ...\\
+                \frac{\partial}{\partial x_n}\\
+
+            \end{bmatrix}
+            \]
+            And the second derivative is the hessian
+            \[
+            f^{(2)}(\underline{a})\approx H(a) = 
+            \begin{bmatrix}
+                \frac{\partial}{\partial x_1^2}&\frac{\partial}{\partial x_1\partial x_2}&...&\frac{\partial}{\partial x_1\partial x_n}\\
+                \frac{\partial}{\partial x_2\partial x_1}&\frac{\partial}{\partial x_2^2}&...&\frac{\partial}{\partial x_2\partial x_n}\\
+                ...&...&...&...\\
+                \frac{\partial}{\partial x_n\partial x_1}&\frac{\partial}{\partial x_n\partial x_2}&...&\frac{\partial}{\partial x_n^2}\\
+
+            \end{bmatrix}
+            \]
+            So we can rewrite the statement above properly
+            \[
+            f(\underline{x}) = f(\underline{a})+\nabla(\underline{a})(\underline{x}-\underline{a})
+                +\frac{1}{2}\langle \underline{x} | H | \underline{x}\rangle+...(\text{higher order terms})\
+            \]
+            If iteratively continue until the gradient becomes zero, we can get an optima. We can also realize why 
+            the definitiveness of the hessian will give us a min or max(or none)
+            \[
+            \langle \underline{x} | H | \underline{x}\rangle+...(\text{higher order terms})\ < 0
+            \]
+            This statement is true only if H is negative definite \(\forall \underline{x}\). Hence we can imagine taking 
+            any distance, \(f(\underline{x}+\triangle) < f(\underline{x})\) 
+            \[
+            \langle \underline{x} | H | \underline{x}\rangle+...(\text{higher order terms})\ > 0
+            \]
+            This is true when H is positive definite by applying the same argument. If we cannot confirm either case(ie semi-definite), 
+            it would depend on the higher order terms. Pretty cool. 
+        ]]>
+    </text>
+</page>
